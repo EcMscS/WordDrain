@@ -1,0 +1,7 @@
+protein
+membrane
+cytoplasmic
+mitochondria
+photosynthesis
+cellular
+triphosphate
