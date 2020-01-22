@@ -1,2 +1,2 @@
 # WordDrain
- Hacking with Swift ; Hangman Challenge ; Wrod Drain
+ Hacking with Swift ; Hangman Challenge ; Word Drain
