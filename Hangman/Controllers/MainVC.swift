@@ -12,30 +12,16 @@ class MainVC: UIViewController {
 
     let allowedNumberOfGuesses = 7
     
-    enum GameEndState {
-        case win
-        case lose
-    }
-    
     let navBarLabel: UILabel = UILabel()
     var wordLabel: HMMainWordLabel!
     let wordView = WordContainerView()
     let batteryView = HMBatteryContainerView()
-    
-    var scoreLabel: UILabel = UILabel()
-    let newGameButton: UIButton = UIButton(type: .system)
-    let scoreCardView: UIView = UIView()
-    var levelCompletedLabel: UILabel = UILabel()
-   
-    var gameStatus: UILabel = UILabel()
+    let scoreCardVC: ScorecardVC? = nil
 
     let lettersView = HMLettersContainerView()
     
-    var score = 0 {
-        didSet {
-            scoreLabel.attributedText = createAttributedText(text: "Score: \(score)", size: 40, fontWeight: .semibold, isShadow: false, wordSpacing: 0, textColor: .label)
-        }
-    }
+    var gameState:HMGameEndState?
+    var score = 0
     
     var currentPosition: Int = 0
     var level = 1
@@ -47,24 +33,19 @@ class MainVC: UIViewController {
     var currentWord: String = ""
     var gameCompleted: Bool = false
     var levelCompleted: Bool = false
-
-    var scorecardTopAnchor: NSLayoutConstraint!
-    var scorecardTrailingAnchor: NSLayoutConstraint!
-    var scorecardBottomAnchor: NSLayoutConstraint!
-    var scorecardLeadingAnchor: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        
+    
         loadLevel()
         setupNavBar()
         configureWordContainerView()
         configureBatteryContainerView()
         configureLettersContainerView()
-        setupViews()
+        setupGame(newWord: currentGameWord)
+      
         lettersView.setupLetters()
-        
         lettersView.delegate = self
     }
 
@@ -139,28 +120,6 @@ class MainVC: UIViewController {
         ])
     }
     
-    //Only called once
-    func setupViews() {
-        setupGame(newWord: currentGameWord)
-        
-        scoreCardView.backgroundColor = .systemYellow
-        scoreCardView.translatesAutoresizingMaskIntoConstraints = false
-
-        view.addSubview(scoreCardView)
-
-        scorecardTopAnchor = scoreCardView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height)
-        scorecardTrailingAnchor = scoreCardView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        scorecardLeadingAnchor = scoreCardView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
-        scorecardBottomAnchor = scoreCardView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
-        
-        NSLayoutConstraint.activate([
-            scorecardTopAnchor,
-            scorecardTrailingAnchor,
-            scorecardBottomAnchor,
-            scorecardLeadingAnchor
-        ])
-    }
-    
     //Only to be called when game is reset
     func numberOfUnderscores() -> String {
         let number = currentWord.count
@@ -204,7 +163,6 @@ class MainVC: UIViewController {
             } else {
                 self.levelCompleted = false
             }
-
         }
     }
     
@@ -213,10 +171,10 @@ class MainVC: UIViewController {
         if currentPosition == count {
             levelCompleted = true
             self.level += 1
-            setupScorecardView()
+            setupScoreCardView()
             loadLevel()
         } else {
-            print("Current position is \(currentPosition): Next Word")
+            print("Current position is \(currentPosition)")
             currentPosition += 1
             currentWord = wordList[currentPosition]
         }
@@ -272,87 +230,26 @@ class MainVC: UIViewController {
         }
     }
     
-    func setupScorecardView() {
-        print("Setup scorecard views")
-        scoreLabel.textAlignment = .center
-        scoreLabel.translatesAutoresizingMaskIntoConstraints = false
+    func setupScoreCardView() {
+        guard let state = gameState else { return }
         
-        gameStatus.textAlignment = .center
-        gameStatus.translatesAutoresizingMaskIntoConstraints = false
-        
-        levelCompletedLabel.textAlignment = .center
-        levelCompletedLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        if levelCompleted == true {
-            newGameButton.setAttributedTitle(createAttributedText(text: "Next Level", size: 30, fontWeight: .medium, isShadow: false, wordSpacing: 0, textColor: .label), for: .normal)
-        } else {
-            newGameButton.setAttributedTitle(createAttributedText(text: "Next Word", size: 30, fontWeight: .medium, isShadow: false, wordSpacing: 0, textColor: .label), for: .normal)
-        }
-
-        newGameButton.translatesAutoresizingMaskIntoConstraints = false
-        newGameButton.backgroundColor = .systemFill
-        newGameButton.layer.cornerRadius = 10
-        newGameButton.layer.borderColor = CGColor(srgbRed: 0, green: 0, blue: 0, alpha: 0.2)
-        newGameButton.layer.borderWidth = 2
-        newGameButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
-        newGameButton.addTarget(self, action: #selector(newGameButtonPressed(button:)), for: .touchUpInside)
-        
-        
-        let scoreStackview = UIStackView()
-        scoreStackview.translatesAutoresizingMaskIntoConstraints = false
-        scoreStackview.axis = .vertical
-        scoreStackview.alignment = .center
-        scoreStackview.distribution = .fill
-        scoreStackview.addArrangedSubview(gameStatus)
-        
-        if levelCompleted == true {
-            levelCompletedLabel.attributedText = createAttributedText(text: "Level Completed", size: 30, fontWeight: .semibold, isShadow: false, wordSpacing: 0, textColor: .label)
-            scoreStackview.addArrangedSubview(levelCompletedLabel)
-        } else {
-            levelCompletedLabel.attributedText = createAttributedText(text: "", size: 30, fontWeight: .semibold, isShadow: false, wordSpacing: 0, textColor: .label)
-            scoreStackview.removeArrangedSubview(levelCompletedLabel)
-        }
-        
-        scoreStackview.addArrangedSubview(scoreLabel)
-        scoreStackview.addArrangedSubview(UIView())
-        scoreStackview.addArrangedSubview(newGameButton)
-        
-        scoreCardView.addSubview(scoreStackview)
-
-        NSLayoutConstraint.activate([
-            scoreStackview.topAnchor.constraint(equalTo: scoreCardView.topAnchor, constant: 20),
-            scoreStackview.trailingAnchor.constraint(equalTo: scoreCardView.trailingAnchor, constant: -20),
-            scoreStackview.bottomAnchor.constraint(equalTo: scoreCardView.bottomAnchor, constant: -40),
-            scoreStackview.leadingAnchor.constraint(equalTo: scoreCardView.leadingAnchor, constant: 20)
-        ])
-    }
-    
-    func slideUpScorecard() {
-        UIView.animate(withDuration: 2.0, delay: 0.0, options: .curveEaseIn, animations: {
-            self.scorecardTopAnchor.constant = self.wordView.frame.height * 2 + self.batteryView.frame.height - 35
-            self.view.layoutIfNeeded()
-        }, completion: nil)
-    }
-    
-    func slideDownScorecard() {
-        UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseOut, animations: {
-            self.scorecardTopAnchor.constant = self.view.frame.height
-            self.view.layoutIfNeeded()
-        }, completion: nil)
+        let newScoreCard = ScorecardVC(score: score, gameStatus: state, levelCompleted: levelCompleted, level: level)
+        newScoreCard.modalPresentationStyle = .overFullScreen
+        newScoreCard.modalTransitionStyle = .coverVertical
+        newScoreCard.delegate = self
+        present(newScoreCard, animated: true)
     }
     
     func resetButtons() {
-        //allLetters.removeAll()
         currentGuess.removeAll()
-        //usedLetters.removeAll()
         correctWordCount = 0
         incorrectGuessCount = 0
  
         batteryView.resetBattery()
-        lettersView.setupLetters()
+        lettersView.resetLetters()
     }
     
-    func endGame(state: GameEndState) {
+    func endGame(state: HMGameEndState) {
         if state == .win {
             if incorrectGuessCount == 0 {
                 score += 5
@@ -365,32 +262,13 @@ class MainVC: UIViewController {
                 score += 1
             }
             
-            gameStatus.attributedText = createAttributedText(text: "You Win!", size: 60, fontWeight: .bold, isShadow: false, wordSpacing: 0, textColor: .label)
+            gameState = .win
         } else if state == .lose {
             score -= 5
-            gameStatus.attributedText = createAttributedText(text: "You Lose!", size: 60, fontWeight: .bold, isShadow: false, wordSpacing: 0, textColor: .label)
+            gameState = .lose
         }
         
-        setupScorecardView()
-        slideUpScorecard()
-    }
-    
-    
-    @objc func newGameButtonPressed(button: UIButton) {
-        //This does not work?
-        if levelCompleted == true {
-            print("Implement Next Level")
-            resetButtons()
-            nextWord()
-            setupGame(newWord: currentWord)
-            levelCompleted = false
-            slideDownScorecard()
-        } else {
-            nextWord()
-            slideDownScorecard()
-            resetButtons()
-            setupGame(newWord: currentWord)
-        }
+        setupScoreCardView()
     }
 }
 
@@ -413,6 +291,22 @@ extension MainVC: HMLettersContinerViewDelegate {
             if allowedNumberOfGuesses == incorrectGuessCount {
                 endGame(state: .lose)
             }
+        }
+    }
+}
+
+extension MainVC: ScorecardVCDelegate {
+    func startNewGame() {
+        if levelCompleted == true {
+            print("Implement Next Level")
+            resetButtons()
+            nextWord()
+            setupGame(newWord: currentWord)
+            levelCompleted = false
+        } else {
+            nextWord()
+            resetButtons()
+            setupGame(newWord: currentWord)
         }
     }
 }

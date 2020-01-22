@@ -1,7 +1,5 @@
 protein
 membrane
-cytoplasmic
-mitochondria
-photosynthesis
-cellular
-triphosphate
+virus
+nephron
+cerebellum

@@ -55,6 +55,7 @@ class HMLettersContainerView: UIView {
     }
     
     func setupLetters() {
+        
         for _ in 0..<numberOfRows {
             let singleStackview = UIStackView()
             singleStackview.translatesAutoresizingMaskIntoConstraints = false
@@ -100,6 +101,7 @@ class HMLettersContainerView: UIView {
     }
     
     func resetLetters() {
+        print("RESET FROM LetterContainerView")
         allLetters.removeAll()
         usedLetters.removeAll()
         

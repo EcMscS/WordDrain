@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		5942935923A4433E00215016 /* level1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5942935823A4433E00215016 /* level1.txt */; };
 		5946614B23A076D3007CDEA3 /* ScorecardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5946614A23A076D3007CDEA3 /* ScorecardVC.swift */; };
+		5972ACA423D65C68004891FC /* HMGameEndState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5972ACA323D65C68004891FC /* HMGameEndState.swift */; };
 		597D433C23C80261002A077C /* WordContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597D433B23C80261002A077C /* WordContainerView.swift */; };
 		597D433E23C80323002A077C /* HMMainWordLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597D433D23C80323002A077C /* HMMainWordLabel.swift */; };
-		597D434023C80846002A077C /* NSAttributedString+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597D433F23C80846002A077C /* NSAttributedString+Ext.swift */; };
 		597D434223C91C2E002A077C /* HMBatteryContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597D434123C91C2E002A077C /* HMBatteryContainerView.swift */; };
 		597D434423C9214B002A077C /* HMBatteryFillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597D434323C9214B002A077C /* HMBatteryFillView.swift */; };
 		597D434623C925EF002A077C /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597D434523C925EF002A077C /* NetworkManager.swift */; };
@@ -22,14 +22,15 @@
 		59992F8E238F4C7500339953 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59992F8D238F4C7500339953 /* Assets.xcassets */; };
 		59992F91238F4C7500339953 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59992F8F238F4C7500339953 /* LaunchScreen.storyboard */; };
 		59992F9E238F4DB200339953 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59992F9D238F4DB200339953 /* MainVC.swift */; };
+		59DC351423D5684000A21FDF /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DC351323D5684000A21FDF /* UIViewController+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5942935823A4433E00215016 /* level1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level1.txt; sourceTree = "<group>"; };
 		5946614A23A076D3007CDEA3 /* ScorecardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScorecardVC.swift; sourceTree = "<group>"; };
+		5972ACA323D65C68004891FC /* HMGameEndState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HMGameEndState.swift; sourceTree = "<group>"; };
 		597D433B23C80261002A077C /* WordContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordContainerView.swift; sourceTree = "<group>"; };
 		597D433D23C80323002A077C /* HMMainWordLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HMMainWordLabel.swift; sourceTree = "<group>"; };
-		597D433F23C80846002A077C /* NSAttributedString+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSAttributedString+Ext.swift"; path = "Hangman/CustomViews/NSAttributedString+Ext.swift"; sourceTree = SOURCE_ROOT; };
 		597D434123C91C2E002A077C /* HMBatteryContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HMBatteryContainerView.swift; sourceTree = "<group>"; };
 		597D434323C9214B002A077C /* HMBatteryFillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HMBatteryFillView.swift; sourceTree = "<group>"; };
 		597D434523C925EF002A077C /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -42,6 +43,7 @@
 		59992F90238F4C7500339953 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		59992F92238F4C7500339953 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		59992F9D238F4DB200339953 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
+		59DC351323D5684000A21FDF /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +60,7 @@
 		59263396239217120036FCC7 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				597D433F23C80846002A077C /* NSAttributedString+Ext.swift */,
+				59DC351323D5684000A21FDF /* UIViewController+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -70,6 +72,14 @@
 				598DC75923A5DBAF00C17E56 /* level2.txt */,
 			);
 			path = Files;
+			sourceTree = "<group>";
+		};
+		5972ACA223D65C1F004891FC /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				5972ACA323D65C68004891FC /* HMGameEndState.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		597D433A23C8017F002A077C /* Managers */ = {
@@ -99,6 +109,7 @@
 		59992F83238F4C7000339953 /* Hangman */ = {
 			isa = PBXGroup;
 			children = (
+				5972ACA223D65C1F004891FC /* Utilities */,
 				5942935723A440B800215016 /* Files */,
 				59263396239217120036FCC7 /* Extensions */,
 				59992F9C238F4C9400339953 /* Storyboards */,
@@ -233,10 +244,11 @@
 				59992F85238F4C7000339953 /* AppDelegate.swift in Sources */,
 				59992F9E238F4DB200339953 /* MainVC.swift in Sources */,
 				597D434623C925EF002A077C /* NetworkManager.swift in Sources */,
+				59DC351423D5684000A21FDF /* UIViewController+Ext.swift in Sources */,
 				597D433C23C80261002A077C /* WordContainerView.swift in Sources */,
 				597D434823C92F3A002A077C /* HMLettersContainerView.swift in Sources */,
+				5972ACA423D65C68004891FC /* HMGameEndState.swift in Sources */,
 				597D434423C9214B002A077C /* HMBatteryFillView.swift in Sources */,
-				597D434023C80846002A077C /* NSAttributedString+Ext.swift in Sources */,
 				59992F87238F4C7000339953 /* SceneDelegate.swift in Sources */,
 				597D434223C91C2E002A077C /* HMBatteryContainerView.swift in Sources */,
 				597D433E23C80323002A077C /* HMMainWordLabel.swift in Sources */,
