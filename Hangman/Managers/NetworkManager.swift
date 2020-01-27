@@ -7,3 +7,19 @@
 //
 
 import Foundation
+
+class NetworkManager {
+    
+    static let shared = NetworkManager()
+    let baseURL = ""
+    
+    private init() {}
+    
+    func getWordOfTheDay() {
+        
+    }
+    
+    func getListOfWords() {
+        
+    }
+}

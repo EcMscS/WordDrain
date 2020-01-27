@@ -69,7 +69,6 @@ class MainVC: UIViewController {
     }
     
     func setupNavBar() {
-        navBarLabel.text = "H?NGM?N"
         navBarLabel.font = UIFont.preferredFont(forTextStyle: .largeTitle)
         navBarLabel.font = .boldSystemFont(ofSize: 50)
         navBarLabel.adjustsFontSizeToFitWidth = true
@@ -81,7 +80,6 @@ class MainVC: UIViewController {
     
     func configureBatteryContainerView() {
         view.addSubview(batteryView)
-        
         let batterySize = batteryView.getBatterySize()
         
         NSLayoutConstraint.activate([
@@ -100,7 +98,8 @@ class MainVC: UIViewController {
         
         NSLayoutConstraint.activate([
             wordLabel.centerYAnchor.constraint(equalTo: wordView.centerYAnchor),
-            wordLabel.centerXAnchor.constraint(equalTo: wordView.centerXAnchor),
+            wordLabel.leadingAnchor.constraint(equalTo: wordView.leadingAnchor, constant: 15),
+            wordLabel.trailingAnchor.constraint(equalTo: wordView.trailingAnchor, constant: -15),
             
             wordView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
             wordView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
@@ -171,6 +170,8 @@ class MainVC: UIViewController {
         if currentPosition == count {
             levelCompleted = true
             self.level += 1
+            navBarLabel.text = "Level \(level)"
+            #warning("Update Default Level")
             setupScoreCardView()
             loadLevel()
         } else {
