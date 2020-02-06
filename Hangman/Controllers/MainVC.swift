@@ -10,6 +10,7 @@ import UIKit
 
 class MainVC: UIViewController {
 
+    let defaults = UserDefaults.standard
     let allowedNumberOfGuesses = 7
     
     let navBarLabel: UILabel = UILabel()
@@ -171,7 +172,7 @@ class MainVC: UIViewController {
             levelCompleted = true
             self.level += 1
             navBarLabel.text = "Level \(level)"
-            #warning("Update Default Level")
+            defaults.set(self.level, forKey: "Level")
             setupScoreCardView()
             loadLevel()
         } else {

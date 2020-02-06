@@ -94,7 +94,7 @@ class SelectGameVC: UIViewController {
             wordBackgroundView.topAnchor.constraint(equalTo: logoImage.bottomAnchor, constant: 0),
             wordBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             wordBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            wordBackgroundView.bottomAnchor.constraint(equalTo: localNewGameButton.topAnchor, constant: 0),
+            wordBackgroundView.bottomAnchor.constraint(equalTo: localNewGameButton.topAnchor, constant: 0)
         ])
     }
     
@@ -109,7 +109,36 @@ class SelectGameVC: UIViewController {
     
     @objc func networkNewGameButtonPressed() {
         print("Network Game Button Pressed")
+     
+        #warning("Testing Network")
+        //getWordOfTheDay()
+        getListOfRandomWords()
     }
 
+    func getListOfRandomWords() {
+        NetworkManager.shared.getListOfWords { [weak self](result) in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let words):
+                print("List of Words(Array): \(words)")
+            case.failure(let error):
+                self.presentGFAlertOnMainThread(title: "Problem Occurred", message: error.rawValue, buttonTitle: "OK")
+            }
+        }
+    }
     
+    func getWordOfTheDay() {
+        NetworkManager.shared.getWordOfTheDay { [weak self](result) in
+            
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let word):
+                print("Word of the day is: \(word)")
+            case .failure(let error):
+                self.presentGFAlertOnMainThread(title: "Bad Stuff Happened", message: error.rawValue, buttonTitle: "OK")
+            }
+        }
+    }
 }
